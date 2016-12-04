@@ -1,0 +1,48 @@
+@model DbCourse.Models.Client
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Client</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.HomeAdress)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.HomeAdress)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IdentityCode)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdentityCode)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Passport)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Passport)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PhoneNumber)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PhoneNumber)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

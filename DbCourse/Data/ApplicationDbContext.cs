@@ -18,9 +18,17 @@ namespace DbCourse.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-            // Customize the ASP.NET Identity model and override the defaults if needed.
-            // For example, you can rename the ASP.NET Identity table names and more.
-            // Add your customizations after calling base.OnModelCreating(builder);
+            builder.Entity<Client>().ToTable("Client");
+            builder.Entity<Manager>().ToTable("Manager");
+            builder.Entity<Office>().ToTable("Office");
+            builder.Entity<Contract>().ToTable("Contract");
         }
+
+
+        public DbSet<Client> Clients { get; set; }
+        public DbSet<Manager> Managers { get; set; }
+        public DbSet<Office> Offices { get; set; }
+        public DbSet<Contract> Contracts { get; set; }
+        public DbSet<Application> Application { get; set; }
     }
 }

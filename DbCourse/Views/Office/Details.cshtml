@@ -1,0 +1,24 @@
+﻿@model DbCourse.Models.Office
+
+<h3>
+  Office No. @Html.DisplayFor(model => model.OfficeNumber) Address: @Html.DisplayFor(model => model.Address)
+</h3>
+<dd>
+    <table class="table">
+        <tr>
+            <th>Name</th>
+            <th>Number</th>
+        </tr>
+        @foreach (var item in Model.Managers)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PhoneNumber)
+                </td>
+            </tr>
+        }
+    </table>
+</dd>
