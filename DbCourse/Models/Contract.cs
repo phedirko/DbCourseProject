@@ -15,15 +15,7 @@ namespace DbCourse.Models
         public DateTime DateOfReg { get; set; }
         public int Months { get; set; }
 
-        public double monthPayment;
-        public double MonthPayment
-        {
-            get { return monthPayment; }
-            set
-            {
-                monthPayment = Summ * Months / 12 * Math.Pow(Percentage, Convert.ToDouble(Months) / 12);
-            }
-        }
+        public double MonthPayment { get; set; }
 
         public int ClientId { get; set; }
         public Client Client { get; set; }
