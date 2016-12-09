@@ -56,10 +56,16 @@ namespace DbCourse.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,ClientId,DateOfReg,ManagerId,MonthPayment,Months,Percentage,Summ")] Contract contract)
+        public async Task<IActionResult> Create([Bind("Id,ClientId,DateOfReg,ManagerId,Months,Percentage,Summ")] Contract contract)
         {
             if (ModelState.IsValid)
             {
+
+                //Bondariev'll kill me
+                contract.MonthPayment = Math.Pow(1 + contract.Percentage*0.01, contract.Months/12);
+                contract.MonthPayment = contract.MonthPayment*contract.Summ;
+                contract.MonthPayment = contract.MonthPayment/contract.Months;
+
                 _context.Add(contract);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
