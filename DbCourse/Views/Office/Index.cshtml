@@ -6,11 +6,21 @@
     <input type="button" class="btn btn-default" value="New" onclick="location.href='@Url.Action("Create", "Office")'" />
 </form>
 
+<form asp-action="Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Find by name: <input type="text" name="SearchString" value="@ViewData["currentFilter"]" />
+            <input type="submit" value="Search" class="btn btn-default" /> |
+            <a asp-action="Index">Back to List</a>
+        </p>
+    </div>
+</form>
+
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.OfficeNumber)
+                <a asp-action="Index" asp-route-sortOrder="@ViewBag.OfficeNSortParm">@Html.DisplayNameFor(model => model.OfficeNumber)</a>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.PhoneNumber)

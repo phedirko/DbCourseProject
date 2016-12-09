@@ -18,10 +18,47 @@ namespace DbCourse.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index()
+        //public async Task<IActionResult> Index()
+        //{
+        //    return View(await _context.Offices.ToListAsync());
+        //}
+
+
+        [HttpGet]
+        public async Task<IActionResult> Index(string sortOrder, string searchString)
         {
-            return View(await _context.Offices.ToListAsync());
+            //ViewData["OfficeNSortParm"] = String.IsNullOrEmpty(sortOrder) ? "officeN_desc" : "";
+            ViewData["OfficeNSortParm"] = sortOrder == "OfficeN" ? "OfficeN_desc" : "OfficeN";
+            //ViewData["PassportSortParm"] = sortOrder == "Passport" ? "passport_desc" : "Passport";
+
+            var offices = from s in _context.Offices
+                          select s;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                offices = offices.Where(s => s.Address.Contains(searchString)
+                                       || s.PhoneNumber.Contains(searchString));
+            }
+
+            switch (sortOrder)
+            {
+                case "OfficeN_desc":
+                    offices = offices.OrderBy(s => s.OfficeNumber);
+                    break;
+                case "OfficeN":
+                    offices = offices.OrderByDescending(s => s.OfficeNumber);
+                    break;
+                //case "passport_desc":
+                //    clients = clients.OrderByDescending(s => s.Passport);
+                //    break;
+                default:
+                    offices = offices.OrderByDescending(s => s.OfficeNumber);
+                    break;
+            }
+            return View(await offices.AsNoTracking().ToListAsync());
         }
+
+
 
         [HttpGet]
         public IActionResult Create()

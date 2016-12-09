@@ -20,10 +20,10 @@ namespace DbCourse.Controllers
         }
 
         // GET: Clients
-        public async Task<IActionResult> Index()
-        {
-            return View(await _context.Clients.ToListAsync());
-        }
+        //public async Task<IActionResult> Index()
+        //{
+        //    return View(await _context.Clients.ToListAsync());
+        //}
 
         // GET: Clients/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -41,6 +41,35 @@ namespace DbCourse.Controllers
 
             return View(client);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Index(string sortOrder)
+        {
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            //ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
+            //ViewData["PassportSortParm"] = sortOrder == "Passport" ? "passport_desc" : "Passport";
+
+            var clients = from s in _context.Clients
+                           select s;
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    clients = clients.OrderByDescending(s => s.Name);
+                    break;
+                case "Passport":
+                    clients = clients.OrderBy(s => s.Passport);
+                    break;
+                case "passport_desc":
+                    clients = clients.OrderByDescending(s => s.Passport);
+                    break;
+                default:
+                    clients = clients.OrderBy(s => s.Name);
+                    break;
+            }
+            return View(await clients.AsNoTracking().ToListAsync());
+        }
+
+
 
         // GET: Clients/Create
         public IActionResult Create()

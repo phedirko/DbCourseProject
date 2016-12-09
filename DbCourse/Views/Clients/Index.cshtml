@@ -19,10 +19,10 @@
                 @Html.DisplayNameFor(model => model.IdentityCode)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                <a asp-action="Index" asp-route-sortOrder="@ViewBag.NameSortParm">@Html.DisplayNameFor(model => model.Name)</a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Passport)
+                <a asp-action="Index" asp-route-sortOrder="@ViewBag.PassportSortParm">@Html.DisplayNameFor(model => model.Passport)</a>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.PhoneNumber)
