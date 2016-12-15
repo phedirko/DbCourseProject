@@ -6,6 +6,16 @@
 
 <h2>Index</h2>
 
+<form asp-action="Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Filter by sum: from: <input type="text" name="sumFrom" value="@ViewData["sumFrom"]" />
+            to: <input type="text" name="sumTo" value="@ViewData["sumTo"]" />
+            <input type="submit" value="Search" class="btn btn-default" /> |
+            <a asp-action="Index">Back to List</a>
+        </p>
+    </div>
+</form>
 <p>
     <a asp-action="Create">Create New</a>
 </p>
