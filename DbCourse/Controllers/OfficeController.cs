@@ -39,7 +39,7 @@ namespace DbCourse.Controllers
                 offices = offices.Where(s => s.Address.Contains(searchString)
                                        || s.PhoneNumber.Contains(searchString));
             }
-
+            
             switch (sortOrder)
             {
                 case "OfficeN_desc":

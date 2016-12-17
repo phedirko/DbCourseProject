@@ -19,11 +19,28 @@ namespace DbCourse.Controllers
             _context = context;    
         }
 
-        // GET: Contracts
-        public async Task<IActionResult> Index()
+        
+        public async Task<IActionResult> Index(string sumFrom, string sumTo)
         {
-            var applicationDbContext = _context.Contracts.Include(c => c.Client).Include(c => c.Manager);
-            return View(await applicationDbContext.ToListAsync());
+            var Contracts = from c in _context.Contracts
+                            select c;
+            
+
+            if (!String.IsNullOrEmpty(sumFrom) &&  !String.IsNullOrEmpty(sumTo))
+            {
+                double fr = Convert.ToDouble(sumFrom);
+                double to = Convert.ToDouble(sumTo);
+
+                Contracts = from c in _context.Contracts
+                                where c.Summ > fr && c.Summ < to
+                                select c;
+            }
+
+
+            
+
+            //return View(await _context.Contracts.ToListAsync());
+            return View(await Contracts.ToListAsync());
         }
 
         // GET: Contracts/Details/5
