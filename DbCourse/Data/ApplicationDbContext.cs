@@ -30,5 +30,6 @@ namespace DbCourse.Data
         public DbSet<Office> Offices { get; set; }
         public DbSet<Contract> Contracts { get; set; }
         public DbSet<Application> Application { get; set; }
+        public DbSet<CreditType> CreditType { get; set; }
     }
 }

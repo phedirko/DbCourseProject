@@ -36,10 +36,6 @@ namespace DbCourse.Controllers
                                 select c;
             }
 
-
-            
-
-            //return View(await _context.Contracts.ToListAsync());
             return View(await Contracts.ToListAsync());
         }
 
@@ -91,8 +87,9 @@ namespace DbCourse.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            ViewData["ClientId"] = new SelectList(_context.Clients, "Id", "Id", contract.ClientId);
-            ViewData["ManagerId"] = new SelectList(_context.Managers, "Id", "Id", contract.ManagerId);
+            ViewData["ClientId"] = new SelectList(_context.Clients, "Id", "Name", contract.ClientId );
+            ViewData["ManagerId"] = new SelectList(_context.Managers, "Id", "Name", contract.ManagerId);
+            ViewData["CreditTypeId"] = new SelectList(_context.CreditType, );
             return View(contract);
         }
 

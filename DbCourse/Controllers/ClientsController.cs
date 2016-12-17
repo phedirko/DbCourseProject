@@ -43,21 +43,14 @@ namespace DbCourse.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index(string sortOrder, string searchString)
+        public async Task<IActionResult> Index(string sortOrder)
         {
             ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             //ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
             //ViewData["PassportSortParm"] = sortOrder == "Passport" ? "passport_desc" : "Passport";
 
             var clients = from s in _context.Clients
-                           select s;
-
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                clients = clients.Where(s => s.Name.Contains(searchString)
-                                       || s.PhoneNumber.Contains(searchString));
-            }
-
+                          select s;
             switch (sortOrder)
             {
                 case "name_desc":
@@ -75,6 +68,7 @@ namespace DbCourse.Controllers
             }
             return View(await clients.AsNoTracking().ToListAsync());
         }
+
 
 
 

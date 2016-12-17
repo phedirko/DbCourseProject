@@ -23,6 +23,7 @@ namespace DbCourse.Models
         public int ManagerId { get; set; }
         public Manager Manager { get; set; }
 
-
+        public int CreditTypeId { get; set; }
+        public CreditType CreditType { get; set; }
     }
 }

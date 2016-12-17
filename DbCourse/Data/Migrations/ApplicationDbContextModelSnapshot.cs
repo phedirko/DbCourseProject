@@ -16,6 +16,24 @@ namespace DbCourse.Data.Migrations
                 .HasAnnotation("ProductVersion", "1.0.1")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("DbCourse.Models.Application", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name");
+
+                    b.Property<bool>("Status");
+
+                    b.Property<double>("Sum");
+
+                    b.Property<int>("Years");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Application");
+                });
+
             modelBuilder.Entity("DbCourse.Models.ApplicationUser", b =>
                 {
                     b.Property<string>("Id");
@@ -92,6 +110,8 @@ namespace DbCourse.Data.Migrations
 
                     b.Property<int>("ClientId");
 
+                    b.Property<int>("CreditTypeId");
+
                     b.Property<DateTime>("DateOfReg");
 
                     b.Property<int>("ManagerId");
@@ -108,9 +128,35 @@ namespace DbCourse.Data.Migrations
 
                     b.HasIndex("ClientId");
 
+                    b.HasIndex("CreditTypeId");
+
                     b.HasIndex("ManagerId");
 
                     b.ToTable("Contract");
+                });
+
+            modelBuilder.Entity("DbCourse.Models.CreditType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("MaxMonth");
+
+                    b.Property<double>("MaxPercentage");
+
+                    b.Property<double>("MaxSum");
+
+                    b.Property<int>("MinMonth");
+
+                    b.Property<double>("MinPercentage");
+
+                    b.Property<double>("MinSumm");
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CreditType");
                 });
 
             modelBuilder.Entity("DbCourse.Models.Manager", b =>
@@ -261,6 +307,11 @@ namespace DbCourse.Data.Migrations
                     b.HasOne("DbCourse.Models.Client", "Client")
                         .WithMany("Contracts")
                         .HasForeignKey("ClientId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("DbCourse.Models.CreditType", "CreditType")
+                        .WithMany("Contracts")
+                        .HasForeignKey("CreditTypeId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("DbCourse.Models.Manager", "Manager")
