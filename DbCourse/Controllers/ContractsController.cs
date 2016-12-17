@@ -62,9 +62,13 @@ namespace DbCourse.Controllers
             {
 
                 //Bondariev'll kill me
-                contract.MonthPayment = Math.Pow(1 + contract.Percentage*0.01, contract.Months/12);
-                contract.MonthPayment = contract.MonthPayment*contract.Summ;
-                contract.MonthPayment = contract.MonthPayment/contract.Months;
+                double mp = (Math.Pow(contract.Percentage / 100 + 1, (double)contract.Months / 12) * contract.Summ) / 12;
+
+                //contract.MonthPayment = Math.Pow(1 + contract.Percentage*0.01, contract.Months/12);
+                //contract.MonthPayment = contract.MonthPayment*contract.Summ;
+                //contract.MonthPayment = contract.MonthPayment/contract.Months;
+
+                contract.MonthPayment = mp;
 
                 _context.Add(contract);
                 await _context.SaveChangesAsync();

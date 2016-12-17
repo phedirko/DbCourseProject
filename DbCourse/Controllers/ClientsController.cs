@@ -43,7 +43,7 @@ namespace DbCourse.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index(string sortOrder)
+        public async Task<IActionResult> Index(string sortOrder, string searchString)
         {
             ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             //ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
@@ -51,6 +51,13 @@ namespace DbCourse.Controllers
 
             var clients = from s in _context.Clients
                            select s;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                clients = clients.Where(s => s.Name.Contains(searchString)
+                                       || s.PhoneNumber.Contains(searchString));
+            }
+
             switch (sortOrder)
             {
                 case "name_desc":
