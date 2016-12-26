@@ -1,0 +1,71 @@
+@model IEnumerable<DbCourse.Models.CreditType>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.MaxMonth)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MaxPercentage)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MaxSum)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MinMonth)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MinPercentage)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MinSumm)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.MaxMonth)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MaxPercentage)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MaxSum)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MinMonth)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MinPercentage)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MinSumm)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

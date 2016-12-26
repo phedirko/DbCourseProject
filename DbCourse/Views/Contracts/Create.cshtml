@@ -17,24 +17,32 @@
                 <select asp-for="ClientId" class ="form-control" asp-items="ViewBag.ClientId"></select>
             </div>
         </div>
-
-
+        <div class="form-group">
+            <label asp-for="CreditTypeId" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <select asp-for="CreditTypeId" class ="form-control" asp-items="ViewBag.CreditTypeId"></select>
+            </div>
+        </div>
         <div class="form-group">
             <label asp-for="DateOfReg" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="DateOfReg" class="form-control" value="@DateTime.Today.ToString("yyyy MMMM dd")">
+                <input asp-for="DateOfReg" class="form-control" />
                 <span asp-validation-for="DateOfReg" class="text-danger" />
             </div>
         </div>
-
-
         <div class="form-group">
             <label asp-for="ManagerId" class="col-md-2 control-label"></label>
             <div class="col-md-10">
                 <select asp-for="ManagerId" class ="form-control" asp-items="ViewBag.ManagerId"></select>
             </div>
         </div>
-
+        @*<div class="form-group">
+            <label asp-for="MonthPayment" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="MonthPayment" class="form-control" />
+                <span asp-validation-for="MonthPayment" class="text-danger" />
+            </div>
+        </div>*@
         <div class="form-group">
             <label asp-for="Months" class="col-md-2 control-label"></label>
             <div class="col-md-10">

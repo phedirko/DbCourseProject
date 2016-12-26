@@ -1,0 +1,60 @@
+@model DbCourse.Models.CreditType
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>CreditType</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.MaxMonth)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MaxMonth)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.MaxPercentage)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MaxPercentage)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.MaxSum)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MaxSum)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.MinMonth)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MinMonth)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.MinPercentage)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MinPercentage)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.MinSumm)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MinSumm)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

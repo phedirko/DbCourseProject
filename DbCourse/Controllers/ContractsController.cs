@@ -19,21 +19,28 @@ namespace DbCourse.Controllers
             _context = context;    
         }
 
-        
+        // GET: Contracts
+        //public async Task<IActionResult> Index()
+        //{
+        //    var applicationDbContext = _context.Contracts.Include(c => c.Client).Include(c => c.CreditType).Include(c => c.Manager);
+
+        //    return View(await applicationDbContext.ToListAsync());
+        //}
+
         public async Task<IActionResult> Index(string sumFrom, string sumTo)
         {
             var Contracts = from c in _context.Contracts
                             select c;
-            
 
-            if (!String.IsNullOrEmpty(sumFrom) &&  !String.IsNullOrEmpty(sumTo))
+
+            if (!String.IsNullOrEmpty(sumFrom) && !String.IsNullOrEmpty(sumTo))
             {
                 double fr = Convert.ToDouble(sumFrom);
                 double to = Convert.ToDouble(sumTo);
 
                 Contracts = from c in _context.Contracts
-                                where c.Summ > fr && c.Summ < to
-                                select c;
+                            where c.Summ > fr && c.Summ < to
+                            select c;
             }
 
             return View(await Contracts.ToListAsync());
@@ -59,8 +66,9 @@ namespace DbCourse.Controllers
         // GET: Contracts/Create
         public IActionResult Create()
         {
-            ViewData["ClientId"] = new SelectList(_context.Clients, "Id", "Id");
-            ViewData["ManagerId"] = new SelectList(_context.Managers, "Id", "Id");
+            ViewData["ClientId"] = new SelectList(_context.Clients, "Id", "Name");
+            ViewData["CreditTypeId"] = new SelectList(_context.CreditType, "Id", "Name");
+            ViewData["ManagerId"] = new SelectList(_context.Managers, "Id", "Name");
             return View();
         }
 
@@ -69,27 +77,33 @@ namespace DbCourse.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,ClientId,DateOfReg,ManagerId,Months,Percentage,Summ")] Contract contract)
+        public async Task<IActionResult> Create([Bind("Id,ClientId,CreditTypeId,DateOfReg,ManagerId,MonthPayment,Months,Percentage,Summ")] Contract contract)
         {
+
+            var sum = _context.CreditType.Where(tp => tp.Id == contract.CreditTypeId).Select(tp => tp.MaxSum).FirstOrDefault();
+            var perc = _context.CreditType.Where(tp => tp.Id == contract.CreditTypeId).Select(tp => tp.MinPercentage).FirstOrDefault();
+            var yrs = _context.CreditType.Where(tp => tp.Id == contract.CreditTypeId).Select(tp => tp.MaxMonth).FirstOrDefault();
+
+            if(contract.Summ > sum)
+                return View("~/Views/Contracts/ErrorSum.cshtml");
+            if (contract.Percentage < perc)
+                return View("~/Views/Contracts/ErrorSum.cshtml");
+            if (contract.Months > yrs)
+                return View("~/Views/Contracts/ErrorSum.cshtml");
+
+            double mp = (Math.Pow(contract.Percentage / 100 + 1, (double)contract.Months / 12) * contract.Summ) / 12;
+            contract.MonthPayment = mp;
+
+
             if (ModelState.IsValid)
             {
-
-                //Bondariev'll kill me
-                double mp = (Math.Pow(contract.Percentage / 100 + 1, (double)contract.Months / 12) * contract.Summ) / 12;
-
-                //contract.MonthPayment = Math.Pow(1 + contract.Percentage*0.01, contract.Months/12);
-                //contract.MonthPayment = contract.MonthPayment*contract.Summ;
-                //contract.MonthPayment = contract.MonthPayment/contract.Months;
-
-                contract.MonthPayment = mp;
-
                 _context.Add(contract);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            ViewData["ClientId"] = new SelectList(_context.Clients, "Id", "Name", contract.ClientId );
-            ViewData["ManagerId"] = new SelectList(_context.Managers, "Id", "Name", contract.ManagerId);
-            ViewData["CreditTypeId"] = new SelectList(_context.CreditType, );
+            ViewData["ClientId"] = new SelectList(_context.Clients, "Id", "Id", contract.ClientId);
+            ViewData["CreditTypeId"] = new SelectList(_context.CreditType, "Id", "Id", contract.CreditTypeId);
+            ViewData["ManagerId"] = new SelectList(_context.Managers, "Id", "Id", contract.ManagerId);
             return View(contract);
         }
 
@@ -107,6 +121,7 @@ namespace DbCourse.Controllers
                 return NotFound();
             }
             ViewData["ClientId"] = new SelectList(_context.Clients, "Id", "Id", contract.ClientId);
+            ViewData["CreditTypeId"] = new SelectList(_context.CreditType, "Id", "Id", contract.CreditTypeId);
             ViewData["ManagerId"] = new SelectList(_context.Managers, "Id", "Id", contract.ManagerId);
             return View(contract);
         }
@@ -116,7 +131,7 @@ namespace DbCourse.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,ClientId,DateOfReg,ManagerId,MonthPayment,Months,Percentage,Summ")] Contract contract)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,ClientId,CreditTypeId,DateOfReg,ManagerId,MonthPayment,Months,Percentage,Summ")] Contract contract)
         {
             if (id != contract.Id)
             {
@@ -144,6 +159,7 @@ namespace DbCourse.Controllers
                 return RedirectToAction("Index");
             }
             ViewData["ClientId"] = new SelectList(_context.Clients, "Id", "Id", contract.ClientId);
+            ViewData["CreditTypeId"] = new SelectList(_context.CreditType, "Id", "Id", contract.CreditTypeId);
             ViewData["ManagerId"] = new SelectList(_context.Managers, "Id", "Id", contract.ManagerId);
             return View(contract);
         }

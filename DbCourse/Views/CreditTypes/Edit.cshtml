@@ -1,0 +1,78 @@
+@model DbCourse.Models.CreditType
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Edit</h2>
+
+<form asp-action="Edit">
+    <div class="form-horizontal">
+        <h4>CreditType</h4>
+        <hr />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="Id" />
+        <div class="form-group">
+            <label asp-for="MaxMonth" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="MaxMonth" class="form-control" />
+                <span asp-validation-for="MaxMonth" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="MaxPercentage" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="MaxPercentage" class="form-control" />
+                <span asp-validation-for="MaxPercentage" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="MaxSum" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="MaxSum" class="form-control" />
+                <span asp-validation-for="MaxSum" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="MinMonth" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="MinMonth" class="form-control" />
+                <span asp-validation-for="MinMonth" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="MinPercentage" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="MinPercentage" class="form-control" />
+                <span asp-validation-for="MinPercentage" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="MinSumm" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="MinSumm" class="form-control" />
+                <span asp-validation-for="MinSumm" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Name" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+</form>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
